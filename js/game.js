@@ -1,33 +1,34 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'bricks', { preload: preload, create: create, update: update });
-
-var s;
+var game = new Phaser.Game(1024, 768, Phaser.CANVAS, 'tube-station', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
-    game.load.image('brick', 'assets/tiles/brick.png');
+
+    game.load.tilemap('station-tiles', 'assets/tube-station/tube_station.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tileset('station-wall', 'assets/tube-station/tiles/brick.png', 64, 64, -1, 0, 0);
+    game.load.tileset('station-platform', 'assets/tube-station/tiles/platform.png', 64, 64, -1, 0, 0);
+    game.load.image('man', 'assets/sprites/man.png');
+
 }
+
+var map;
+var tileset;
+var bricklayer;
+var platformlayer;
+
+var cursors;
+var sprite;
 
 function create() {
-    s = game.add.tileSprite(0, 0, 10, 20, 'brick');
-}
 
-function update() {
+    stationMap = game.add.tilemap('station-tiles');
 
-    if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
-    {
-        s.tilePosition.x += 8;
-    }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
-    {
-        s.tilePosition.x -= 8;
-    }
-
-    if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
-    {
-        s.tilePosition.y += 8;
-    }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
-    {
-        s.tilePosition.y -= 8;
-    }
+    stationWallTileset = game.add.tileset('station-wall');
+    stationPlatformTileset = game.add.tileset('station-platform');
+    
+    stationWalllayer = game.add.tilemapLayer(0, 0, 1024, 768, stationWallTileset, stationMap, 0);
+    stationPlatformLayer = game.add.tilemapLayer(0, 0, 1024, 768, stationPlatformTileset, stationMap, 1);
 
 }
+
+function update() {}
+
+function render() {}
